@@ -1,8 +1,11 @@
-# MedCloud
+# Cognito Patient CRUD
 
-MedCloud é um projeto que inclui um aplicativo web para gerenciar dados de pacientes. O projeto é dividido em duas partes principais: o frontend e o backend.
+Cognito Patient CRUD é um projeto que inclui um aplicativo web para gerenciar dados de pacientes. O projeto é dividido em duas partes principais: o frontend e o backend.
 
-## Configuração e Execução
+## Funcionalidades Principais
+
+- **Autenticação**: Utiliza AWS Cognito para gerenciar autenticação de usuários e administradores.
+- **CRUD de Pacientes**: Permite criar, ler, atualizar e deletar dados de pacientes.
 
 ### 1. Configurar o Backend
 
