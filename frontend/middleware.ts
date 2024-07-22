@@ -6,11 +6,19 @@ export async function middleware(request: NextRequest) {
 	const response = NextResponse.next();
 	const user = await authenticatedUser({ request, response });
 
-	if (!user) {
-		return NextResponse.redirect(new URL("/?error=unauthorized", request.nextUrl));
+	const isOnDashboard = request.nextUrl.pathname.startsWith("/dashboard");
+
+	if (isOnDashboard) {
+		if (!user)
+			return NextResponse.redirect(new URL("/?error=unauthorized", request.nextUrl));
+		return response;
+	} else if (user) {
+		return NextResponse.redirect(new URL("/dashboard/patients", request.nextUrl));
 	}
 }
 
 export const config = {
-	matcher: ["/dashboard/:path*"]
+	matcher: [
+		"/((?!api|_next/static|_next/image|.*\\.png$|.*\\.svg$).*)",
+	],
 };

@@ -12,11 +12,8 @@ export async function createUser(inputs: TCreateUserSchema) {
   const safe = CreateUserSchema.safeParse(inputs);
 
   if (safe.success) {
-    const data = await fetch(`${process.env.BACKEND_URL}/users/create`, {
+    const data = await getData("/users/create", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(inputs),
     });
 
@@ -45,11 +42,8 @@ export async function getUserById(userId: string) {
 }
 
 export async function updateUser(userId: string, inputs: TUpdateUserSchema) {
-  const data = await fetch(`${process.env.BACKEND_URL}/users/update/${userId}`, {
+  const data = await getData(`/users/update/${userId}`, {
     method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
     body: JSON.stringify(inputs),
   });
 
@@ -59,11 +53,8 @@ export async function updateUser(userId: string, inputs: TUpdateUserSchema) {
 }
 
 export async function deleteUser(userId: string) {
-  const data = await fetch(`${process.env.BACKEND_URL}/users/delete/${userId}`, {
+  const data = await getData(`/users/delete/${userId}`, {
     method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
   });
 
   revalidateTag("users");

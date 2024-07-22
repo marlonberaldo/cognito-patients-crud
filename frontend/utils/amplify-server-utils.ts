@@ -1,13 +1,14 @@
 /* eslint-disable no-console */
 "use server";
 
-import { authConfig } from "@/app/amplify-cognito-config";
+import { userAuthConfig } from "@/lib/auth-config";
+
 import { createServerRunner, NextServer } from "@aws-amplify/adapter-nextjs";
 import { fetchAuthSession, getCurrentUser } from "aws-amplify/auth/server";
 
 export const { runWithAmplifyServerContext } = createServerRunner({
 	config: {
-		Auth: authConfig
+		Auth: userAuthConfig
 	}
 });
 
