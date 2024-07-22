@@ -4,8 +4,18 @@ import { getAllUsers } from "../controllers/users/get-users";
 import { deleteUser } from "../controllers/users/delete-user";
 import { updateUser } from "../controllers/users/update-user";
 import { getUserById } from "../controllers/users/get-user-by-id";
+import { ensureAuthenticated } from "../middleware/auth";
 
 export async function usersRoutes(app: FastifyInstance) {
+  app.addHook("preHandler",
+    async (req, res) => {
+      const { payload, errorMessage } = await ensureAuthenticated(req);
+
+      if (!payload) {
+        res.status(401).send({ message: errorMessage });
+      }
+    });
+
   app.post("/create", createUser);
 
   app.get("/get-by-id/:userId", getUserById);
