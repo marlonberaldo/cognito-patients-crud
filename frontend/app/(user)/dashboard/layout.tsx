@@ -1,17 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import SignOutButton from "./patients/_components/sign-out-button";
+
 import { formatDate } from "@/utils/format-date";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
 
   return (
-    <section className="flex w-full flex-col">
-      <header className="sticky top-0 z-50 h-[80px] border-b bg-white">
+    <section className="w-full h-screen flex flex-col">
+      <header className="sticky top-0 z-50 h-[80px] min-h-[80px] border-b bg-white">
         <nav className="screen_size flex h-full items-center justify-between">
           <Link href="/dashboard/patients">
             <Image
-              src="/assets/logo.png"
+              src="/assets/logo-ipsum.svg"
               alt="Logo Medcloud"
               className="dark:invert"
               width={150}
@@ -24,11 +26,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             {formatDate(new Date().toString())}
           </span>
 
-          <span />
+          <SignOutButton />
         </nav>
       </header>
 
-      <div className="bg-_gray screen_size min-h-[calc(100dvh-80px)]">
+      <div className="bg-_gray p-10 overflow-y-scroll h-full border-2 border-_blue">
         {children}
       </div>
     </section>

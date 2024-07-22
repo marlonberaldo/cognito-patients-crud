@@ -93,7 +93,7 @@ const EditUserForm = ({ user }: IEditUserForm) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full rounded-lg bg-white">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full rounded-lg bg-white mb-[100px]">
         <div className="text-_gray-title border-b p-5">
           <h2 className="text-lg font-semibold">Dados pessoais</h2>
         </div>

@@ -36,24 +36,24 @@ const SearchBar = () => {
   const pathname = usePathname();
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    push(`${pathname}?userName=${values.username}`);
+    push(`${pathname}?userName=${encodeURIComponent(values.username)}`);
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex items-center gap-x-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex items-center gap-x-4 w-full lg:w-3/5">
         <FormField
           control={form.control}
           name="username"
           render={({ field, fieldState }) => (
-            <FormItem>
+            <FormItem className="grow">
               <FormControl>
-                <div className="relative flex w-full items-center">
+                <div className="relative flex w-full items-center !flex-1">
                   <Input
                     placeholder={fieldState.error?.message || "Buscar por nome"}
                     type="text"
                     inputMode="text"
-                    className={`w-[600px] pl-10 ${fieldState.error ? "placeholder:text-red-500" : "placeholder:text-_gray-title"}`}
+                    className={`pl-10 ${fieldState.error ? "placeholder:text-red-500" : "placeholder:text-_gray-title"}`}
                     {...field}
                   />
                   <Search className="text-_gray-title absolute left-3 top-1/2 size-5 -translate-y-1/2" size={20} />
