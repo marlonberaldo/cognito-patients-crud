@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 import { redirect } from "next/navigation";
 
 import { TConfirmSignUp, TSignIn, TSignUp } from "./schemas/auth-schema";
@@ -17,6 +18,7 @@ import {
   updateUserAttribute,
   type UpdateUserAttributeOutput
 } from "aws-amplify/auth";
+
 import { getErrorMessage } from "@/utils/get-error-message";
 
 /**

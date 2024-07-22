@@ -30,7 +30,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </nav>
       </header>
 
-      <div className="bg-_gray p-10 overflow-y-scroll h-full border-2 border-_blue">
+      <div className="bg-_gray p-10 overflow-y-scroll h-full">
         {children}
       </div>
     </section>

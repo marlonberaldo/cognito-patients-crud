@@ -15,24 +15,16 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
 import { useToast } from "@/components/ui/use-toast";
 
 import { CreateUserSchema } from "@/lib/schemas/user-schema";
-import { cn } from "@/lib/utils";
 import { createUser } from "@/lib/actions";
 
 import { format } from "date-fns";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { CalendarIcon, Loader } from "lucide-react";
-import { pt, ptBR } from "date-fns/locale";
+import { Loader } from "lucide-react";
 import { PatternFormat } from "react-number-format";
 
 const CreateUserForm = () => {
@@ -87,7 +79,7 @@ const CreateUserForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full rounded-lg bg-white">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full rounded-lg bg-white mb-[100px]">
         <div className="text-_gray-title border-b p-5">
           <h2 className="text-lg font-semibold">Dados pessoais</h2>
         </div>
@@ -134,43 +126,22 @@ const CreateUserForm = () => {
           <FormField
             control={form.control}
             name="birthDate"
-            render={({ field, fieldState }) => (
+            render={({ field: { onChange, value, ...restField }, fieldState }) => (
               <FormItem className="bg-_gray w-full rounded-lg p-4">
                 <FormLabel className="text-_gray-title px-2">Data de nascimento</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant={"outline"}
-                        className={cn(
-                          "w-full bg-transparent pl-3 h-8 text-left font-normal",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value ? (
-                          format(field.value, "PPP", { locale: ptBR })
-                        ) : (
-                          <span className={`${fieldState.error && "text-destructive"}`}>
-                            {fieldState.error?.message || "-"}
-                          </span>
-                        )}
-                        <CalendarIcon className="ml-auto size-4 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      locale={pt}
-                      disabled={(date) =>
-                        date > new Date() || date < new Date("1900-01-01")
-                      }
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
+                <FormControl>
+                  <PatternFormat
+                    {...restField}
+                    format="## / ## / ####"
+                    placeholder={fieldState.error?.message || "DD / MM / AAAA"}
+                    customInput={Input}
+                    onValueChange={(values) => {
+                      onChange(new Date(values.value));
+                    }}
+                    inputMode="numeric"
+                    className={`h-8 rounded-sm bg-transparent px-2 ${fieldState.error && "placeholder:text-destructive"}`}
+                  />
+                </FormControl>
               </FormItem>
             )}
           />

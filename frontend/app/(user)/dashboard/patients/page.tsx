@@ -26,6 +26,14 @@ import { Edit2, Plus } from "lucide-react";
 async function GetUsersTable({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
   const { users } = await getUsers(searchParams);
 
+  if (users.length === 0) {
+    return (
+      <div className="flex items-center justify-center w-full h-[200px] bg-white rounded-lg shadow-sm">
+        <p className="text-lg text-gray-500">Nenhum paciente encontrado</p>
+      </div>
+    );
+  }
+
   return (
     <Table className="rounded-lg bg-white">
       <TableHeader>
@@ -37,32 +45,23 @@ async function GetUsersTable({ searchParams }: { searchParams: { [key: string]: 
         </TableRow>
       </TableHeader>
 
-      {users.length === 0 ? (
-        <TableBody>
-          <TableRow>
-            <TableCell colSpan={4} className="text-center">Nenhum paciente encontrado.</TableCell>
+      <TableBody>
+        {users.map((user) => (
+          <TableRow key={user.id}>
+            <TableCell className="font-medium">{user.name}</TableCell>
+            <TableCell>{user.email}</TableCell>
+            <TableCell>{formatDate(user.birthDate)}</TableCell>
+            <TableCell className="flex justify-end gap-x-4">
+              <Button asChild size={"icon"} variant={"ghost"} className="size-8 border">
+                <Link href={`/dashboard/patients/edit/${user.id}`}>
+                  <Edit2 size={16} />
+                </Link>
+              </Button>
+              <DeleteUserButton userId={user.id} />
+            </TableCell>
           </TableRow>
-        </TableBody>
-      ) :
-
-        <TableBody>
-          {users.map((user) => (
-            <TableRow key={user.id}>
-              <TableCell className="font-medium">{user.name}</TableCell>
-              <TableCell>{user.email}</TableCell>
-              <TableCell>{formatDate(user.birthDate)}</TableCell>
-              <TableCell className="flex justify-end gap-x-4">
-                <Button asChild size={"icon"} variant={"ghost"} className="size-8 border">
-                  <Link href={`/dashboard/patients/edit/${user.id}`}>
-                    <Edit2 size={16} />
-                  </Link>
-                </Button>
-                <DeleteUserButton userId={user.id} />
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      }
+        ))}
+      </TableBody>
     </Table>
   );
 }
