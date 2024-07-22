@@ -1,4 +1,4 @@
-import { FastifyReply, FastifyRequest } from "fastify";
+import { FastifyRequest } from "fastify";
 import { CognitoJwtVerifier } from "aws-jwt-verify";
 import { CognitoAccessTokenPayload } from "aws-jwt-verify/jwt-model";
 
@@ -24,9 +24,6 @@ export async function ensureAuthenticated(req: FastifyRequest): Promise<IValidat
 
   try {
     const payload: CognitoAccessTokenPayload = await verifier.verify(token);
-
-    console.log("Payload", payload);
-
 
     return { payload };
   } catch (error) {
