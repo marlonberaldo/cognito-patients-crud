@@ -14,7 +14,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <Link href="/dashboard/patients">
             <Image
               src="/assets/logo-ipsum.svg"
-              alt="Logo Medcloud"
+              alt="Logo"
               className="dark:invert"
               width={150}
               height={60}
