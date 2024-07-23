@@ -27,6 +27,12 @@ Cognito Patient CRUD é um projeto que inclui um aplicativo web para gerenciar d
     npx prisma migrate dev
     ```
 
+4. Inicie o servidor de desenvolvimento:
+
+    ```bash
+    npm run dev
+    ```
+
 ### 2. Configurar o Frontend
 
 1. Navegue até o diretório do frontend:
